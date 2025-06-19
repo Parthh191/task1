@@ -8,6 +8,7 @@ import Comment from "../components/Comment";
 import { useTheme } from "../context/ThemeContext";
 import { useLoading } from "../context/LoadingContext";
 import { useImage } from "../context/ImageContext";
+import Loader from "../components/Loader";
 
 
 const PostDetail = () => {
@@ -25,9 +26,9 @@ const PostDetail = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      if (!isReady) {
-        startLoading();
-        try {
+      startLoading();
+      try {
+        if (!isReady) {
           // Start data fetching and animation in parallel
           const [postData, commentsData] = await Promise.all([
             getPost(id),
@@ -37,24 +38,17 @@ const PostDetail = () => {
           const post = postData.data;
           const authorData = await getProfile(post.authorId);
           
-          // Wait for both animation and image preloading - changed to 1 second
-          await Promise.all([
-            new Promise(resolve => setTimeout(resolve, 1200)),
-            (async () => {
-              const imagesToPreload = [post.thumbnail, authorData.data.image];
-              await preloadImages(imagesToPreload);
-              setPost(post);
-              setComments(commentsData.data);
-              setAuthor(authorData.data);
-            })()
-          ]);
-
+          const imagesToPreload = [post.thumbnail, authorData.data.image];
+          await preloadImages(imagesToPreload);
+          setPost(post);
+          setComments(commentsData.data);
+          setAuthor(authorData.data);
           setIsReady(true);
-        } catch (error) {
-          setError("Failed to fetch post details. Please try again later.");
-        } finally {
-          stopLoading();
         }
+      } catch (error) {
+        setError("Failed to fetch post details. Please try again later.");
+      } finally {
+        stopLoading();
       }
     };
 
@@ -93,7 +87,7 @@ const PostDetail = () => {
 
   if (error)
     return <div className="text-red-500 text-center p-4">{error}</div>;
-  if (!isReady || !post) return null;
+  if (!isReady || !post) return <Loader fullScreen />;
 
   return (
     <motion.div 

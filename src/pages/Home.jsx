@@ -5,6 +5,7 @@ import { getPosts, searchPosts } from "../service/api";
 import BlogCard from "../components/BlogCard";
 import { useLoading } from "../context/LoadingContext";
 import { useImage } from "../context/ImageContext";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -26,29 +27,22 @@ const Home = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      if (!isReady) {
-        startLoading();
-        try {
+      startLoading();
+      try {
+        if (!isReady) {
           const response = await getPosts();
           const postsData = response.data;
 
-          // Load images and wait for animation in parallel - changed to 1 second
-          await Promise.all([
-            new Promise((resolve) => setTimeout(resolve, 1200)),
-            (async () => {
-              const imageUrls = postsData.map((post) => post.thumbnail);
-              await preloadImages(imageUrls);
-              setPosts(postsData);
-              setFilteredPosts(postsData);
-            })(),
-          ]);
-
+          const imageUrls = postsData.map((post) => post.thumbnail);
+          await preloadImages(imageUrls);
+          setPosts(postsData);
+          setFilteredPosts(postsData);
           setIsReady(true);
-        } catch (error) {
-          setError("Failed to fetch posts. Please try again later.");
-        } finally {
-          stopLoading();
         }
+      } catch (error) {
+        setError("Failed to fetch posts. Please try again later.");
+      } finally {
+        stopLoading();
       }
     };
 
@@ -64,7 +58,7 @@ const Home = () => {
   }, [searchTerm, posts]);
 
   if (error) return <div className="text-red-500 text-center p-4">{error}</div>;
-  if (!isReady) return null;
+  if (!isReady) return <Loader fullScreen />;
 
   return (
     <motion.div

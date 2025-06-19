@@ -20,7 +20,7 @@ const Loader = ({ fullScreen = false }) => {
 
   if (fullScreen) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-blog-light dark:bg-dark-gradient relative">
+      <div className="flex items-center justify-center min-h-screen bg-blog-light  dark:bg-blog-dark">
         <div className="hidden dark:block absolute inset-0 bg-dark-glow opacity-50"></div>
         {SpinnerComponent}
       </div>

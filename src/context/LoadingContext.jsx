@@ -26,8 +26,8 @@ export const LoadingProvider = ({ children }) => {
         <LoadingContext.Provider value={{ isLoading, startLoading, stopLoading }}>
             {children}
             {isLoading && (
-                <div className="fixed inset-0 bg-black/20 dark:bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center">
-                    <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-xl">
+                <div className="fixed inset-0 bg-white/10 dark:bg-blog-dark-deeper/80 backdrop-blur-sm z-50 flex items-center justify-center">
+                    <div className="bg-white/90 dark:black-600/90 p-4 rounded-xl shadow-xl backdrop-blur-md">
                         <Loader />
                     </div>
                 </div>
