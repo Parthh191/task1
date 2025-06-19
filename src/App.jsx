@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from './context/ThemeContext';
 import Home from './pages/Home';
 import PostDetail from './pages/PostDetail';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
@@ -29,6 +30,14 @@ function App() {
             >
               Blog App
             </motion.h1>
+            <motion.button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-blog-light-secondary dark:bg-gray-800 text-blog-light-text dark:text-white"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {theme === 'dark' ? '🌙' : '☀️'}
+            </motion.button>
           </motion.nav>
         </header>
 
@@ -41,7 +50,7 @@ function App() {
           </AnimatePresence>
         </main>
 
-        <footer className="mt-8 sm:mt-16 text-center text-gray-400">
+        <footer className="mt-8 sm:mt-16 text-center text-gray-600 dark:text-gray-400">
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

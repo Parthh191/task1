@@ -2,59 +2,26 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        'blog-dark': '#1a1c2e',
-        'blog-dark-light': '#2d1b41',
+        'blog-dark': '#0F172A',
+        'blog-dark-light': '#1E293B',
         'blog-primary': '#8b5cf6',
         'blog-secondary': '#ec4899',
+        'blog-accent': '#6366f1',
+        'blog-dark-surface': '#1E293B',
+        'blog-dark-deeper': '#0B1121',
+        'blog-light': '#f9f9f9',
+        'blog-light-secondary': '#ffffff',
+        'blog-light-text': '#1a1a1a',
       },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-in',
-        'slide-up': 'slideUp 0.5s ease-out',
-        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(20px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(100%)' },
-          '100%': { transform: 'translateY(0)' },
-        },
-      },
-      backdropBlur: {
-        xs: '2px',
-      },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: '65ch',
-            color: 'white',
-            h1: {
-              color: 'white',
-            },
-            h2: {
-              color: 'white',
-            },
-            h3: {
-              color: 'white',
-            },
-            strong: {
-              color: 'white',
-            },
-            a: {
-              color: '#646cff',
-              '&:hover': {
-                color: '#535bf2',
-              },
-            },
-          },
-        },
+      backgroundImage: {
+        'dark-gradient': 'linear-gradient(135deg,rgb(14, 17, 26) 0%,rgb(5, 18, 39) 40%, rgba(6, 7, 61, 0.2) 80%, rgba(0, 0, 0, 0.1) 100%)',
+        'dark-glow': 'radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), rgba(99, 102, 241, 0.15) 50%, transparent 100%)',
       },
     },
   },

@@ -1,31 +1,59 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate, useLocation } from "react-router-dom";
 import { getPosts, searchPosts } from "../service/api";
 import BlogCard from "../components/BlogCard";
-import Loader from "../components/Loader";
+import { useLoading } from "../context/LoadingContext";
+import { useImage } from "../context/ImageContext";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [posts, setPosts] = useState([]);
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState(location.state?.error || null);
+  const { startLoading, stopLoading } = useLoading();
+  const { preloadImages } = useImage();
+  const [isReady, setIsReady] = useState(false);
+
+  // Clear error from location state after displaying
+  useEffect(() => {
+    if (location.state?.error) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, [location.state, navigate]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await getPosts();
-        setPosts(response.data);
-        setFilteredPosts(response.data);
-      } catch (error) {
-        setError("Failed to fetch posts. Please try again later.");
-      } finally {
-        setLoading(false);
+    const loadData = async () => {
+      if (!isReady) {
+        startLoading();
+        try {
+          const response = await getPosts();
+          const postsData = response.data;
+
+          // Load images and wait for animation in parallel - changed to 1 second
+          await Promise.all([
+            new Promise((resolve) => setTimeout(resolve, 1200)),
+            (async () => {
+              const imageUrls = postsData.map((post) => post.thumbnail);
+              await preloadImages(imageUrls);
+              setPosts(postsData);
+              setFilteredPosts(postsData);
+            })(),
+          ]);
+
+          setIsReady(true);
+        } catch (error) {
+          setError("Failed to fetch posts. Please try again later.");
+        } finally {
+          stopLoading();
+        }
       }
     };
 
-    fetchPosts();
-  }, []);
+    loadData();
+  }, [startLoading, stopLoading, preloadImages, isReady]);
 
   useEffect(() => {
     const filterPosts = async () => {
@@ -35,16 +63,15 @@ const Home = () => {
     filterPosts();
   }, [searchTerm, posts]);
 
-  if (loading) return <Loader />;
-  if (error)
-    return <div className="text-red-500 text-center p-4">{error}</div>;
+  if (error) return <div className="text-red-500 text-center p-4">{error}</div>;
+  if (!isReady) return null;
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="min-h-screen bg-blog-dark text-white py-6 px-4 sm:px-6 lg:px-8"
+      className="min-h-screen bg-blog-light dark:bg-blog-dark text-blog-light-text dark:text-white py-6 px-4 sm:px-6 lg:px-8"
     >
       <div className="max-w-[1440px] mx-auto">
         <motion.div
@@ -66,7 +93,7 @@ const Home = () => {
               placeholder="Search posts..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full p-4 rounded-2xl bg-gray-900/80 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 border border-purple-500/20 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-purple-500/30"
+              className="w-full p-4 rounded-2xl bg-blog-light-secondary dark:bg-gray-900/80 text-blog-light-text dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500/50 border border-purple-500/20 shadow-xl backdrop-blur-sm transition-all duration-300 hover:border-purple-500/30"
             />
           </div>
         </motion.div>
@@ -93,7 +120,7 @@ const Home = () => {
             animate={{ opacity: 1 }}
             className="text-center mt-12"
           >
-            <p className="text-xl text-gray-400">
+            <p className="text-xl text-gray-600 dark:text-gray-400">
               No posts found matching your search.
             </p>
           </motion.div>

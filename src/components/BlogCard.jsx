@@ -6,12 +6,14 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { getProfile, getComments } from "../service/api";
 import { BiCommentDetail, BiUser } from "react-icons/bi";
 import { FiClock, FiCalendar } from "react-icons/fi";
+import { useTheme } from "../context/ThemeContext";
 
 dayjs.extend(relativeTime);
 
 export default function BlogCard({ post }) {
   const [author, setAuthor] = useState(null);
   const [commentCount, setCommentCount] = useState(0);
+  const { theme } = useTheme();
   const readTime = Math.max(1, Math.ceil(post.content.split(" ").length / 200));
 
   useEffect(() => {
@@ -37,11 +39,11 @@ export default function BlogCard({ post }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group h-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-900/80 to-indigo-900/80 p-1.5 border border-transparent hover:border-purple-500/30"
+      className="group h-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-900/80 to-indigo-900/80 dark:from-purple-900/80 dark:to-indigo-900/80 from-purple-100 to-indigo-100 p-1.5 border border-transparent hover:border-purple-500/30"
     >
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-transparent to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       
-      <div className="relative h-full rounded-xl bg-gray-900/90 backdrop-blur-sm flex flex-col overflow-hidden">
+      <div className="relative h-full rounded-xl bg-blog-light-secondary dark:bg-gray-900/90 backdrop-blur-sm flex flex-col overflow-hidden">
         <Link to={`/post/${post.id}`} className="flex-1 flex flex-col">
           {/* Image Container */}
           <div className="relative overflow-hidden">
@@ -55,7 +57,7 @@ export default function BlogCard({ post }) {
                 loading="lazy"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-100 via-gray-100/40 to-transparent dark:from-gray-900 dark:via-gray-900/40 dark:to-transparent opacity-50 group-hover:opacity-30 transition-opacity duration-300" />
             
             {/* Category Tag */}
             <div className="absolute left-4 top-4">
@@ -65,7 +67,7 @@ export default function BlogCard({ post }) {
             </div>
 
             {/* Meta Info Overlay */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-white/90">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-blog-light-text dark:text-white/90">
               <span className="flex items-center gap-2">
                 <FiCalendar className="w-4 h-4" />
                 {dayjs(post.createdAt).format("MMM D, YYYY")}
@@ -81,12 +83,16 @@ export default function BlogCard({ post }) {
           <div className="flex-1 flex flex-col p-6">
             <motion.h2
               whileHover={{ x: 4 }}
-              className="text-xl font-bold text-white group-hover:text-indigo-400 line-clamp-2 mb-3 transition-colors duration-300"
+              className={`text-xl font-bold mb-3 transition-colors duration-300 ${
+                theme === "dark"
+                  ? "text-white"
+                  : "text-indigo-600"
+              }`}
             >
               {post.title}
             </motion.h2>
 
-            <p className="text-sm text-gray-300/90 line-clamp-3 mb-6">
+            <p className="text-sm text-gray-600 dark:text-gray-300/90 line-clamp-3 mb-6">
               {post.excerpt || post.content.substring(0, 150) + "..."}
             </p>
 
@@ -113,10 +119,14 @@ export default function BlogCard({ post }) {
                       <span className="absolute -bottom-1 -right-1 h-3 w-3 rounded-full bg-green-500 border-2 border-gray-900"></span>
                     </motion.div>
                     <div>
-                      <span className="font-medium text-white group-hover:text-indigo-400 transition-colors duration-300">
+                      <span className={`font-medium transition-colors duration-300 ${
+                        theme === "dark"
+                          ? "text-white"
+                          : "text-indigo-600"
+                      }`}>
                         {author.name}
                       </span>
-                      <div className="flex items-center gap-2 text-xs text-gray-400">
+                      <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                         <span className="flex items-center gap-1">
                           <BiCommentDetail className="h-3.5 w-3.5" />
                           {commentCount} comments

@@ -2,12 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  color-scheme: dark;
-}
-
 body {
-  @apply bg-blog-dark text-white;
+  @apply bg-blog-light dark:bg-blog-dark text-blog-light-text dark:text-white;
 }
 
 #root {
@@ -51,5 +47,5 @@ body {
 }
 
 .read-the-docs {
-  color: #888;
+  @apply text-gray-600 dark:text-gray-400;
 }
