@@ -213,14 +213,14 @@ const PostDetail = () => {
               </form>
 
               <motion.div 
-                className="space-y-6"
+                className="space-y-3 sm:space-y-6"
                 variants={{
                   hidden: { opacity: 0, y: 20 },
                   visible: {
                     opacity: 1,
                     y: 0,
                     transition: {
-                      staggerChildren: 0.15
+                      staggerChildren: 0.1
                     }
                   }
                 }}
