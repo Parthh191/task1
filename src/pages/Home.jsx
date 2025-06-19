@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { getPosts, searchPosts } from "../service/api";
 import BlogCard from "../components/BlogCard";
-import { useLoading } from "../context/LoadingContext";
 import { useImage } from "../context/ImageContext";
 import Loader from "../components/Loader";
 
@@ -14,7 +13,6 @@ const Home = () => {
   const [filteredPosts, setFilteredPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(location.state?.error || null);
-  const { startLoading, stopLoading } = useLoading();
   const { preloadImages } = useImage();
   const [isReady, setIsReady] = useState(false);
 
@@ -27,7 +25,6 @@ const Home = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      startLoading();
       try {
         if (!isReady) {
           const response = await getPosts();
@@ -41,13 +38,11 @@ const Home = () => {
         }
       } catch (error) {
         setError("Failed to fetch posts. Please try again later.");
-      } finally {
-        stopLoading();
       }
     };
 
     loadData();
-  }, [startLoading, stopLoading, preloadImages, isReady]);
+  }, [preloadImages, isReady]);
 
   useEffect(() => {
     const filterPosts = async () => {

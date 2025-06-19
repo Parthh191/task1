@@ -6,14 +6,12 @@ import { FiClock, FiCalendar, FiMessageCircle } from "react-icons/fi";
 import { getPost, getProfile, getComments, addComment } from "../service/api";
 import Comment from "../components/Comment";
 import { useTheme } from "../context/ThemeContext";
-import { useLoading } from "../context/LoadingContext";
 import { useImage } from "../context/ImageContext";
 import Loader from "../components/Loader";
 
 
 const PostDetail = () => {
   const { theme } = useTheme();
-  const { startLoading, stopLoading } = useLoading();
   const { preloadImages } = useImage();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -23,10 +21,10 @@ const PostDetail = () => {
   const [newComment, setNewComment] = useState("");
   const [error, setError] = useState(null);
   const [isReady, setIsReady] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
-      startLoading();
       try {
         if (!isReady) {
           // Start data fetching and animation in parallel
@@ -47,19 +45,17 @@ const PostDetail = () => {
         }
       } catch (error) {
         setError("Failed to fetch post details. Please try again later.");
-      } finally {
-        stopLoading();
       }
     };
 
     loadData();
-  }, [id, startLoading, stopLoading, preloadImages, isReady]);
+  }, [id, preloadImages, isReady]);
 
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!newComment.trim()) return;
 
-    startLoading();
+    setIsSubmitting(true);
     try {
       const comment = {
         postId: parseInt(id),
@@ -79,7 +75,7 @@ const PostDetail = () => {
         navigate('/', { state: { error: 'Post not found or was deleted' } });
       }
     } finally {
-      stopLoading();
+      setIsSubmitting(false);
     }
   };
 
