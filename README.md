@@ -22,7 +22,7 @@ A modern React blog application built with Vite, React Router, and Tailwind CSS.
 
 1. Clone the repository
 ```bash
-git clone <repository-url>
+git clone https://github.com/Parthh191/task1
 cd task1
 ```
 
