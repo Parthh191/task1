@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "http://localhost:3001"; // Replace with your actual API base URL
+const API_BASE_URL = "https://task1-91x1.onrender.com"; // Replace with your actual API base URL
 const api = axios.create({
   baseURL: API_BASE_URL
 });
