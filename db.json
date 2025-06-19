@@ -1,0 +1,149 @@
+{
+  "profiles": [
+    {
+      "id": "1",
+      "name": "Jay Patel",
+      "image": "https://i.pravatar.cc/150?img=1"
+    },
+    {
+      "id": "2",
+      "name": "Sana Khan",
+      "image": "https://i.pravatar.cc/150?img=2"
+    },
+    {
+      "id": "3",
+      "name": "Ravi Sharma",
+      "image": "https://i.pravatar.cc/150?img=3"
+    },
+    {
+      "id": "4",
+      "name": "Emily Stone",
+      "image": "https://i.pravatar.cc/150?img=4"
+    },
+    {
+      "id": "5",
+      "name": "Nikhil Verma",
+      "image": "https://i.pravatar.cc/150?img=5"
+    }
+  ],
+  "posts": [
+    {
+      "id": "101",
+      "title": "Mastering React in 7 Days",
+      "thumbnail": "https://picsum.photos/seed/post1/400/200",
+      "content": "React is a powerful frontend library used to build modern UIs. This guide helps you master it in just 7 days...",
+      "authorId": 1
+    },
+    {
+      "id": "102",
+      "title": "Understanding JavaScript Closures",
+      "thumbnail": "https://picsum.photos/seed/post2/400/200",
+      "content": "Closures are an important concept in JS. This post simplifies them with relatable examples and use-cases...",
+      "authorId": 2
+    },
+    {
+      "id": "103",
+      "title": "Node.js for Beginners",
+      "thumbnail": "https://picsum.photos/seed/post3/400/200",
+      "content": "This post is designed for backend beginners to quickly get started with Node.js and build real APIs...",
+      "authorId": 3
+    },
+    {
+      "id": "104",
+      "title": "Express.js Routing Demystified",
+      "thumbnail": "https://picsum.photos/seed/post4/400/200",
+      "content": "Express routes can look intimidating. Let's simplify how you can structure and manage routes like a pro...",
+      "authorId": 4
+    },
+    {
+      "id": "105",
+      "title": "CSS Grid vs Flexbox: What to Use When?",
+      "thumbnail": "https://picsum.photos/seed/post5/400/200",
+      "content": "Both CSS Grid and Flexbox are layout superpowers. This post compares their use-cases with examples...",
+      "authorId": 5
+    },
+    {
+      "id": "106",
+      "title": "Deploying React Apps on Vercel",
+      "thumbnail": "https://picsum.photos/seed/post6/400/200",
+      "content": "In this tutorial, learn how to deploy your React application on Vercel with custom domain and CI setup...",
+      "authorId": 2
+    }
+  ],
+  "comments": [
+    {
+      "id": "1",
+      "postId": 101,
+      "text": "Very helpful article!",
+      "userId": 2
+    },
+    {
+      "id": "2",
+      "postId": 101,
+      "text": "Loved the explanation on hooks!",
+      "userId": 3
+    },
+    {
+      "id": "3",
+      "postId": 102,
+      "text": "Closures always confuse me, but this helped.",
+      "userId": 1
+    },
+    {
+      "id": "4",
+      "postId": 103,
+      "text": "Good intro for backend beginners.",
+      "userId": 2
+    },
+    {
+      "id": "5",
+      "postId": 104,
+      "text": "Routing is so much clearer now!",
+      "userId": 5
+    },
+    {
+      "id": "6",
+      "postId": 105,
+      "text": "Exactly what I needed to choose between Grid and Flex.",
+      "userId": 4
+    },
+    {
+      "id": "7",
+      "postId": 106,
+      "text": "Deployed my first app thanks to this post!",
+      "userId": 1
+    },
+    {
+      "id": "8",
+      "postId": 102,
+      "text": "You nailed closures in such a simple way.",
+      "userId": 4
+    },
+    {
+      "id": "9",
+      "postId": 105,
+      "text": "I’ll print this and pin it to my desk!",
+      "userId": 3
+    },
+    {
+      "id": "10",
+      "postId": 103,
+      "text": "Looking forward to an advanced post on Node!",
+      "userId": 5
+    },
+    {
+      "id": "b663",
+      "postId": 102,
+      "userId": 1,
+      "text": "This is looks nice ",
+      "createdAt": "2025-06-19T05:37:13.578Z"
+    },
+    {
+      "id": "1a9a",
+      "postId": 101,
+      "userId": 1,
+      "text": "Nice course.\n",
+      "createdAt": "2025-06-19T05:59:14.802Z"
+    }
+  ]
+}
